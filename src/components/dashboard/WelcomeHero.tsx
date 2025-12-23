@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
 import { ArrowRight, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import type { SavedDesign } from '@/types/dashboard';
 
 interface WelcomeHeroProps {
@@ -9,6 +9,8 @@ interface WelcomeHeroProps {
 }
 
 const WelcomeHero = ({ userName, currentDesign }: WelcomeHeroProps) => {
+  const { toast } = useToast();
+
   const formatLastUpdated = (date: Date) => {
     const now = new Date();
     const diff = now.getTime() - date.getTime();
@@ -17,6 +19,20 @@ const WelcomeHero = ({ userName, currentDesign }: WelcomeHeroProps) => {
     if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
     const days = Math.floor(hours / 24);
     return `${days} day${days > 1 ? 's' : ''} ago`;
+  };
+
+  const handleContinueBuilding = () => {
+    toast({
+      title: "Design Studio Opening",
+      description: `Resuming work on ${currentDesign?.name || 'your design'}...`,
+    });
+  };
+
+  const handleViewEstimate = () => {
+    toast({
+      title: "Loading Estimate",
+      description: "Preparing your detailed cost breakdown...",
+    });
   };
 
   return (
@@ -66,11 +82,11 @@ const WelcomeHero = ({ userName, currentDesign }: WelcomeHeroProps) => {
 
             {/* CTAs */}
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button variant="gold" size="lg" className="group">
+              <Button variant="gold" size="lg" className="group" onClick={handleContinueBuilding}>
                 Continue Building
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button variant="goldOutline" size="lg">
+              <Button variant="goldOutline" size="lg" onClick={handleViewEstimate}>
                 View Estimate
               </Button>
             </div>
