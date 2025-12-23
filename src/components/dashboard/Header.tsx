@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bell, ChevronDown, User, Settings, LogOut, Home, Compass, Palette, Zap } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Bell, ChevronDown, User, Settings, LogOut, Home, Compass, Palette, Zap, HardHat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,12 +19,16 @@ interface HeaderProps {
 
 const Header = ({ userName = 'Guest', userTier }: HeaderProps) => {
   const [notificationCount] = useState(3);
+  const location = useLocation();
 
   const navItems = [
-    { label: 'Dashboard', icon: Home, href: '#' },
+    { label: 'Dashboard', icon: Home, href: '/' },
     { label: 'Builder', icon: Compass, href: '#builder' },
     { label: 'Materials', icon: Palette, href: '#materials' },
     { label: 'Smart Home', icon: Zap, href: '#smart-home' },
+    ...(userTier === 'client'
+      ? [{ label: 'My Construction', icon: HardHat, href: '/my-construction', highlight: true }]
+      : []),
   ];
 
   return (
@@ -45,18 +51,51 @@ const Header = ({ userName = 'Guest', userTier }: HeaderProps) => {
 
         {/* Navigation */}
         <nav className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => (
-            <motion.a
-              key={item.label}
-              href={item.href}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-2 rounded-lg px-4 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            >
-              <item.icon className="h-4 w-4" />
-              <span className="text-sm font-medium">{item.label}</span>
-            </motion.a>
-          ))}
+          {navItems.map((item) => {
+            const isActive = item.href === '/' ? location.pathname === '/' : location.pathname === item.href;
+            const isLink = item.href.startsWith('/');
+            const highlight = 'highlight' in item && item.highlight;
+
+            const content = (
+              <>
+                <item.icon className="h-4 w-4" />
+                <span className="text-sm font-medium">{item.label}</span>
+                {highlight && (
+                  <Badge className="ml-1 animate-pulse bg-primary/20 text-primary text-xs px-1.5 py-0">
+                    Building
+                  </Badge>
+                )}
+              </>
+            );
+
+            if (isLink) {
+              return (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className={`flex items-center gap-2 rounded-lg px-4 py-2 transition-colors ${
+                    isActive
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  }`}
+                >
+                  {content}
+                </Link>
+              );
+            }
+
+            return (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-2 rounded-lg px-4 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                {content}
+              </motion.a>
+            );
+          })}
         </nav>
 
         {/* Right Side */}
