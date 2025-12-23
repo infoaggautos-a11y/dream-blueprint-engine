@@ -3,6 +3,7 @@ import WelcomeHero from '@/components/dashboard/WelcomeHero';
 import DreamScore from '@/components/dashboard/DreamScore';
 import SavedDesigns from '@/components/dashboard/SavedDesigns';
 import WhatIfSimulator from '@/components/dashboard/WhatIfSimulator';
+import BuildTwin from '@/components/dashboard/BuildTwin';
 import LiveActivityFeed from '@/components/dashboard/LiveActivityFeed';
 import NextSteps from '@/components/dashboard/NextSteps';
 import SessionBubble from '@/components/dashboard/SessionBubble';
@@ -13,6 +14,7 @@ import type { SavedDesign, DreamScore as DreamScoreType, UserSession } from '@/t
 import designThumb1 from '@/assets/design-thumbnail-1.jpg';
 import designThumb2 from '@/assets/design-thumbnail-2.jpg';
 import designThumb3 from '@/assets/design-thumbnail-3.jpg';
+
 const mockDesigns: SavedDesign[] = [
   {
     id: '1',
@@ -100,26 +102,43 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 pb-24 pt-28">
+        {/* Two Column Layout */}
         <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
-          {/* Primary Feed */}
+          {/* Primary Feed - 70% width on desktop */}
           <div className="space-y-8">
+            {/* Module 1: Welcome Hero */}
             <WelcomeHero userName={userName} currentDesign={mockDesigns[0]} />
+            
+            {/* Module 3: Saved Designs Gallery */}
             <SavedDesigns designs={mockDesigns} />
+            
+            {/* Module 4: What-If Simulator */}
             <WhatIfSimulator />
+            
+            {/* Module 5: Build Twin Social Proof */}
+            <BuildTwin />
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar - 30% width on desktop */}
           <div className="space-y-6">
+            {/* Module 2: Dream Score Widget */}
             <DreamScore score={mockDreamScore} />
+            
+            {/* Module 6: Next Steps Checklist */}
             <NextSteps />
+            
+            {/* Module 7: Live Activity Feed */}
             <LiveActivityFeed />
           </div>
         </div>
       </main>
 
       {/* Floating Elements */}
-      <SessionBubble session={mockSession} />
+      {/* Module 8: AI Assistant */}
       <AIAssistant />
+      
+      {/* Tier 1: Session Bubble for Visitors */}
+      <SessionBubble session={mockSession} />
     </div>
   );
 };
