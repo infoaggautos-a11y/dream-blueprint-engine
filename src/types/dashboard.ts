@@ -81,3 +81,83 @@ export interface User {
   avatar?: string;
   createdAt: Date;
 }
+
+// ============= CLIENT DASHBOARD (TIER 3) TYPES =============
+
+export interface ConstructionPhase {
+  id: string;
+  name: string;
+  status: 'completed' | 'in_progress' | 'upcoming';
+  progress: number;
+  startDate?: Date;
+  endDate?: Date;
+  estimatedEnd?: Date;
+}
+
+export interface ConstructionPhoto {
+  id: string;
+  url: string;
+  caption: string;
+  date: Date;
+  phase: string;
+}
+
+export interface ProjectProgress {
+  projectName: string;
+  location: string;
+  startDate: Date;
+  overallProgress: number;
+  currentPhase: string;
+  nextMilestone: string;
+  estimatedMilestoneDate: Date;
+  isOnSchedule: boolean;
+  daysAheadOrBehind: number;
+  phases: ConstructionPhase[];
+  recentPhotos: ConstructionPhoto[];
+}
+
+export interface BudgetItem {
+  id: string;
+  category: string;
+  amount: number;
+  status: 'paid' | 'due' | 'upcoming';
+}
+
+export interface BudgetOverview {
+  totalContract: number;
+  spentToDate: number;
+  remaining: number;
+  percentSpent: number;
+  items: BudgetItem[];
+  nextPaymentDue?: Date;
+  nextPaymentAmount?: number;
+  currency: string;
+}
+
+export interface QualityInspection {
+  id: string;
+  type: string;
+  status: 'passed' | 'scheduled' | 'in_review';
+  inspector?: string;
+  date: Date;
+  score?: number;
+  notes?: string;
+}
+
+export interface ProjectMessage {
+  id: string;
+  sender: string;
+  role: string;
+  message: string;
+  timestamp: Date;
+  isRead: boolean;
+  icon: string;
+}
+
+export interface ClientProject {
+  id: string;
+  progress: ProjectProgress;
+  budget: BudgetOverview;
+  inspections: QualityInspection[];
+  messages: ProjectMessage[];
+}
