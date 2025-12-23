@@ -1,6 +1,6 @@
 import { ArrowRight, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 import type { SavedDesign } from '@/types/dashboard';
 
 interface WelcomeHeroProps {
@@ -9,7 +9,7 @@ interface WelcomeHeroProps {
 }
 
 const WelcomeHero = ({ userName, currentDesign }: WelcomeHeroProps) => {
-  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const formatLastUpdated = (date: Date) => {
     const now = new Date();
@@ -22,17 +22,11 @@ const WelcomeHero = ({ userName, currentDesign }: WelcomeHeroProps) => {
   };
 
   const handleContinueBuilding = () => {
-    toast({
-      title: "Design Studio Opening",
-      description: `Resuming work on ${currentDesign?.name || 'your design'}...`,
-    });
+    navigate('/builder');
   };
 
   const handleViewEstimate = () => {
-    toast({
-      title: "Loading Estimate",
-      description: "Preparing your detailed cost breakdown...",
-    });
+    navigate('/builder');
   };
 
   return (
