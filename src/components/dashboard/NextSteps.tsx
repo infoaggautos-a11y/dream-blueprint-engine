@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Target, Check, Circle, ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { NextStep } from '@/types/dashboard';

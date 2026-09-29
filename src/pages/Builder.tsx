@@ -20,6 +20,12 @@ const Builder = () => {
   const [autoRotate, setAutoRotate] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
 
+  // Keep the estimate page in sync with the current design
+  useEffect(() => {
+    saveActiveConfig({ floors, bedrooms, bathrooms, style });
+  }, [floors, bedrooms, bathrooms, style]);
+
+
   // Calculate estimated cost based on configuration
   const calculateEstimate = useCallback(() => {
     const basePrice = 15000000; // ₦15M base
@@ -100,6 +106,12 @@ const Builder = () => {
               <HelpCircle className="w-4 h-4 mr-2" />
               Guide
             </Button>
+            <Link to="/estimate">
+              <Button variant="outline" size="sm">
+                <Receipt className="w-4 h-4 mr-2" />
+                View Estimate
+              </Button>
+            </Link>
             <Button size="sm" className="btn-gold">
               <Sparkles className="w-4 h-4 mr-2" />
               AI Suggest
