@@ -1,11 +1,12 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Scene } from '@/components/builder/Scene';
 import { BuilderControls } from '@/components/builder/BuilderControls';
 import { RoomDetails } from '@/components/builder/RoomDetails';
-import { ArrowLeft, HelpCircle, Sparkles } from 'lucide-react';
+import { ArrowLeft, HelpCircle, Sparkles, Receipt } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { saveActiveConfig } from '@/lib/estimate';
 
 const Builder = () => {
   const { toast } = useToast();
@@ -18,6 +19,12 @@ const Builder = () => {
   const [showRoof, setShowRoof] = useState(true);
   const [autoRotate, setAutoRotate] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
+
+  // Keep the estimate page in sync with the current design
+  useEffect(() => {
+    saveActiveConfig({ floors, bedrooms, bathrooms, style });
+  }, [floors, bedrooms, bathrooms, style]);
+
 
   // Calculate estimated cost based on configuration
   const calculateEstimate = useCallback(() => {
@@ -99,6 +106,12 @@ const Builder = () => {
               <HelpCircle className="w-4 h-4 mr-2" />
               Guide
             </Button>
+            <Link to="/estimate">
+              <Button variant="outline" size="sm">
+                <Receipt className="w-4 h-4 mr-2" />
+                View Estimate
+              </Button>
+            </Link>
             <Button size="sm" className="btn-gold">
               <Sparkles className="w-4 h-4 mr-2" />
               AI Suggest

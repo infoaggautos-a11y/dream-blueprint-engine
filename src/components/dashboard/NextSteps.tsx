@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Target, Check, Circle, ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { NextStep } from '@/types/dashboard';
@@ -15,6 +16,8 @@ const steps: NextStep[] = [
 ];
 
 const NextSteps = () => {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -69,7 +72,12 @@ const NextSteps = () => {
             </span>
 
             {step.current && (
-              <Button variant="gold" size="sm" className="ml-auto text-xs">
+              <Button
+                variant="gold"
+                size="sm"
+                className="ml-auto text-xs"
+                onClick={() => navigate('/estimate')}
+              >
                 Complete Now
               </Button>
             )}

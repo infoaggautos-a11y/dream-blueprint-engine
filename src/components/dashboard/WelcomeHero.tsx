@@ -26,7 +26,7 @@ const WelcomeHero = ({ userName, currentDesign }: WelcomeHeroProps) => {
   };
 
   const handleViewEstimate = () => {
-    navigate('/builder');
+    navigate('/estimate');
   };
 
   return (
