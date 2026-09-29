@@ -72,7 +72,12 @@ const NextSteps = () => {
             </span>
 
             {step.current && (
-              <Button variant="gold" size="sm" className="ml-auto text-xs">
+              <Button
+                variant="gold"
+                size="sm"
+                className="ml-auto text-xs"
+                onClick={() => navigate('/estimate')}
+              >
                 Complete Now
               </Button>
             )}
