@@ -1,11 +1,12 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Scene } from '@/components/builder/Scene';
 import { BuilderControls } from '@/components/builder/BuilderControls';
 import { RoomDetails } from '@/components/builder/RoomDetails';
-import { ArrowLeft, HelpCircle, Sparkles } from 'lucide-react';
+import { ArrowLeft, HelpCircle, Sparkles, Receipt } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { saveActiveConfig } from '@/lib/estimate';
 
 const Builder = () => {
   const { toast } = useToast();
