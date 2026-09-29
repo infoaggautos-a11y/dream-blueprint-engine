@@ -16,6 +16,8 @@ const steps: NextStep[] = [
 ];
 
 const NextSteps = () => {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
